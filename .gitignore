@@ -16,3 +16,17 @@ local.properties
 /build.gradle
 /.idea/AndroidProjectSystem.xml
 /app/src/main/res/xml/backup_rules.xml
+/gradle.properties
+/gradlew.bat
+/.idea/migrations.xml
+/.idea/misc.xml
+/.idea/compiler.xml
+/.idea/deploymentTargetSelector.xml
+/settings.gradle
+/.idea/runConfigurations.xml
+/app/proguard-rules.pro
+/.idea/deviceManager.xml
+/.idea/gradle.xml
+/gradle/wrapper/gradle-wrapper.jar
+/gradle/wrapper/gradle-wrapper.properties
+/gradlew
