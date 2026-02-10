@@ -2,6 +2,7 @@ package lk.jiat.eshop.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -97,6 +98,8 @@ public class MainActivity extends AppCompatActivity
             bottomNavigationView.getMenu().findItem(R.id.bottom_nav_home).setChecked(true);
         }
 
+        //2026 - 02 - 20 (Load user data)
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -115,12 +118,27 @@ public class MainActivity extends AppCompatActivity
                                     .load(user.getProfilePicUrl())
                                     .circleCrop()
                                     .into(sideNavHeaderBinding.headerProfilePic);
+                        }else{
+                            Log.e("Firestore", "User data is null");
                         }
+                    }).addOnFailureListener(e -> {
+                        Log.e("Firestore", "Error getting user data", e);
                     });
 
         }
 
+        // 2026 - 02 - 20 (Menu Item Visibility)
 
+
+
+        navigationView.getMenu().findItem(R.id.side_nav_login).setVisible(false);
+
+        navigationView.getMenu().findItem(R.id.side_nav_profile).setVisible(true);
+        navigationView.getMenu().findItem(R.id.side_nav_orders).setVisible(true);
+        navigationView.getMenu().findItem(R.id.side_nav_wishlist).setVisible(true);
+        navigationView.getMenu().findItem(R.id.side_nav_cart).setVisible(true);
+        navigationView.getMenu().findItem(R.id.side_nav_cart).setVisible(true);
+        navigationView.getMenu().findItem(R.id.side_nav_logout).setVisible(true);
 
 
     }
@@ -182,7 +200,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (itemId == R.id.side_nav_logout) {
-
+            firebaseAuth.signOut();
+            loadFragment(new HomeFragment());
         }
 
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
