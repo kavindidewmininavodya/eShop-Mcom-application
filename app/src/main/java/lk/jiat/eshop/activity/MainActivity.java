@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity
         } else if (itemId == R.id.side_nav_profile || itemId == R.id.bottom_nav_profile) {
             //2026-02-20 (Check if user is logged in)
             if(firebaseAuth.getCurrentUser() == null){
-                Intent intent = new Intent((MainActivity.this, SignInActivity.class));
+                Intent intent = new Intent(MainActivity.this, SignInActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity
         } else if (itemId == R.id.side_nav_cart || itemId == R.id.bottom_nav_cart) {
             //2026 - 02 - 20 (Check if user is logged in)
             if(firebaseAuth.getCurrentUser() == null){
-                Intent intent = new Intent((MainActivity.this, SignInActivity.class));
+                Intent intent = new Intent(MainActivity.this, SignInActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -214,6 +214,16 @@ public class MainActivity extends AppCompatActivity
         } else if (itemId == R.id.side_nav_logout) {
             firebaseAuth.signOut();
             loadFragment(new HomeFragment());
+
+            //2026-02-20 (Logout)
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.side_nav_menu);
+
+//            View headerView = navigationView.getHeaderView(0);
+
+            navigationView.removeHeaderView(sideNavHeaderBinding.getRoot());
+            navigationView.inflateHeaderView(R.layout.side_nav_header);
         }
 
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {

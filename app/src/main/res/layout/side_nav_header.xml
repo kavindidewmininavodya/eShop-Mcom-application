@@ -2,15 +2,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/header_profile_pic"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="bottom"
         android:layout_margin="20dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:background="@drawable/circle_shape"
+        tools:srcCompat="@tools:sample/avatars"
+        app:shapeAppearanceOverlay="@style/CircleImage"/>
 
     <TextView
         android:id="@+id/header_user_name"
@@ -18,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="125dp"
-        android:text="Lakshan" />
+        android:text="You are not logged in" />
 
     <TextView
         android:id="@+id/header_user_email"
@@ -26,8 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="125dp"
-        android:layout_marginTop="20dp"
-        android:text="achintha@javainstitute.edu.lk" />
+        android:layout_marginTop="20dp"/>
 
 
 </FrameLayout>
