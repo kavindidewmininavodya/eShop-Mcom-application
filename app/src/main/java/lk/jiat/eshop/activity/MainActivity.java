@@ -166,6 +166,12 @@ public class MainActivity extends AppCompatActivity
             bottomNavigationView.getMenu().findItem(R.id.bottom_nav_home).setChecked(true);
 
         } else if (itemId == R.id.side_nav_profile || itemId == R.id.bottom_nav_profile) {
+            //2026-02-20 (Check if user is logged in)
+            if(firebaseAuth.getCurrentUser() == null){
+                Intent intent = new Intent((MainActivity.this, SignInActivity.class));
+                startActivity(intent);
+                finish();
+            }
             loadFragment(new ProfileFragment());
             navigationView.getMenu().findItem(R.id.side_nav_profile).setChecked(true);
             bottomNavigationView.getMenu().findItem(R.id.bottom_nav_profile).setChecked(true);
@@ -179,6 +185,12 @@ public class MainActivity extends AppCompatActivity
             navigationView.getMenu().findItem(R.id.side_nav_wishlist).setChecked(true);
 
         } else if (itemId == R.id.side_nav_cart || itemId == R.id.bottom_nav_cart) {
+            //2026 - 02 - 20 (Check if user is logged in)
+            if(firebaseAuth.getCurrentUser() == null){
+                Intent intent = new Intent((MainActivity.this, SignInActivity.class));
+                startActivity(intent);
+                finish();
+            }
             loadFragment(new CartFragment());
             navigationView.getMenu().findItem(R.id.side_nav_cart).setChecked(true);
             bottomNavigationView.getMenu().findItem(R.id.bottom_nav_cart).setChecked(true);
