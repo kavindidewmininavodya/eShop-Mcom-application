@@ -16,4 +16,6 @@
     <string name="bottom_nav_cart_title">Cart</string>
     <string name="bottom_nav_profile_title">Profile</string>
     <string name="search_hint">Search here</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 </resources>

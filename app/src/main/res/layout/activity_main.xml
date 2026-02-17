@@ -14,10 +14,13 @@
         android:orientation="vertical">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/ic_menu">
 
             <EditText
+                android:id="@+id/text_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="10dp"
@@ -33,12 +36,14 @@
         </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:itemIconSize="25dp"
@@ -49,6 +54,7 @@
 
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/side_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
@@ -56,6 +62,8 @@
         app:itemIconSize="25dp"
         app:itemIconTint="@color/nav_item_colors"
         app:menu="@menu/side_nav_menu" />
+
+
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
