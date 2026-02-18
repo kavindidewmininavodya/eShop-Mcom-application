@@ -1,8 +1,10 @@
 package lk.jiat.eshop.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
-
+import android.view.View;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -10,49 +12,61 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
-
 import lk.jiat.eshop.R;
+import lk.jiat.eshop.databinding.ActivityMainBinding;
+import lk.jiat.eshop.databinding.SideNavHeaderBinding;
+import lk.jiat.eshop.fragment.CartFragment;
+import lk.jiat.eshop.fragment.CategoryFragment;
 import lk.jiat.eshop.fragment.HomeFragment;
+import lk.jiat.eshop.fragment.MessageFragment;
+import lk.jiat.eshop.fragment.OrdersFragment;
 import lk.jiat.eshop.fragment.ProfileFragment;
+import lk.jiat.eshop.fragment.SettingsFragment;
+import lk.jiat.eshop.fragment.WishlistFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        NavigationBarView.OnItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnItemSelectedListener {
 
+
+    private ActivityMainBinding binding;
+    private SideNavHeaderBinding sideNavHeaderBinding;
+
+    private DrawerLayout drawerLayout;
     private MaterialToolbar toolbar;
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
-    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        drawerLayout = findViewById(R.id.drawerLayout);
-        toolbar = findViewById(R.id.toolBar);
-        navigationView = findViewById(R.id.side_navigation_view);
-        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        View headerView = binding.sideNavigationView.getHeaderView(0);
+
+        sideNavHeaderBinding = SideNavHeaderBinding.bind(headerView);
+
+
+        drawerLayout = binding.drawerLayout;
+        toolbar = binding.toolbar;
+        navigationView = binding.sideNavigationView;
+        bottomNavigationView = binding.bottomNavigationView;
 
         setSupportActionBar(toolbar);
 
-        // Drawer Toggle
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                toolbar,
-                R.string.drawer_open,
-                R.string.drawer_close
-        );
+        ActionBarDrawerToggle toggle =
+                new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(toggle);
+
         toggle.syncState();
 
-        // Back button behavior
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -64,79 +78,89 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
         navigationView.setNavigationItemSelectedListener(this);
         bottomNavigationView.setOnItemSelectedListener(this);
 
-        // Load default fragment
-        loadFragment(new HomeFragment());
-        navigationView.setCheckedItem(R.id.side_nav_home);
-        bottomNavigationView.setSelectedItemId(R.id.bottom_nav_home);
+        if (savedInstanceState == null) {
+            loadFragment(new HomeFragment());
+            navigationView.getMenu().findItem(R.id.side_nav_home).setChecked(true);
+            bottomNavigationView.getMenu().findItem(R.id.bottom_nav_home).setChecked(true);
+        }
+
     }
 
-    // 🔹 Fragment Loader Method
-    private void loadFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
-    }
 
-    // SIDE + BOTTOM NAVIGATION HANDLER
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
 
-        int id = item.getItemId();
+        Menu navMenu = navigationView.getMenu();
+        Menu bottomNavMenu = bottomNavigationView.getMenu();
 
-        // HOME
-        if (id == R.id.side_nav_home || id == R.id.bottom_nav_home) {
+        for (int i = 0; i < navMenu.size(); i++) {
+            navMenu.getItem(i).setChecked(false);
+        }
+
+        for (int i = 0; i < bottomNavMenu.size(); i++) {
+            bottomNavMenu.getItem(i).setChecked(false);
+        }
+
+
+        if (itemId == R.id.side_nav_home || itemId == R.id.bottom_nav_home) {
             loadFragment(new HomeFragment());
-            navigationView.setCheckedItem(R.id.side_nav_home);
-            bottomNavigationView.setSelectedItemId(R.id.bottom_nav_home);
-        }
+            navigationView.getMenu().findItem(R.id.side_nav_home).setChecked(true);
+            bottomNavigationView.getMenu().findItem(R.id.bottom_nav_home).setChecked(true);
 
-        // PROFILE
-        else if (id == R.id.side_nav_profile || id == R.id.bottom_nav_profile) {
+        } else if (itemId == R.id.side_nav_profile || itemId == R.id.bottom_nav_profile) {
             loadFragment(new ProfileFragment());
-            navigationView.setCheckedItem(R.id.side_nav_profile);
-            bottomNavigationView.setSelectedItemId(R.id.bottom_nav_profile);
+            navigationView.getMenu().findItem(R.id.side_nav_profile).setChecked(true);
+            bottomNavigationView.getMenu().findItem(R.id.bottom_nav_profile).setChecked(true);
+
+        } else if (itemId == R.id.side_nav_orders) {
+            loadFragment(new OrdersFragment());
+            navigationView.getMenu().findItem(R.id.side_nav_orders).setChecked(true);
+
+        } else if (itemId == R.id.side_nav_wishlist) {
+            loadFragment(new WishlistFragment());
+            navigationView.getMenu().findItem(R.id.side_nav_wishlist).setChecked(true);
+
+        } else if (itemId == R.id.side_nav_cart || itemId == R.id.bottom_nav_cart) {
+            loadFragment(new CartFragment());
+            navigationView.getMenu().findItem(R.id.side_nav_cart).setChecked(true);
+            bottomNavigationView.getMenu().findItem(R.id.bottom_nav_cart).setChecked(true);
+
+        } else if (itemId == R.id.side_nav_message) {
+            loadFragment(new MessageFragment());
+            navigationView.getMenu().findItem(R.id.side_nav_message).setChecked(true);
+
+        } else if (itemId == R.id.side_nav_settings) {
+            loadFragment(new SettingsFragment());
+            navigationView.getMenu().findItem(R.id.side_nav_settings).setChecked(true);
+
+        } else if (itemId == R.id.bottom_nav_category) {
+            loadFragment(new CategoryFragment());
+            navigationView.getMenu().findItem(R.id.bottom_nav_category).setChecked(true);
+
+        } else if (itemId == R.id.side_nav_login) {
+            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+            startActivity(intent);
+
+        } else if (itemId == R.id.side_nav_logout) {
+
         }
 
-        // ORDERS
-        else if (id == R.id.side_nav_orders) {
-            // loadFragment(new OrdersFragment());
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         }
-
-        // WISHLIST
-        else if (id == R.id.side_nav_wishlist) {
-        }
-
-        // CART
-        else if (id == R.id.side_nav_cart || id == R.id.bottom_nav_cart) {
-        }
-
-        // MESSAGE
-        else if (id == R.id.side_nav_message) {
-        }
-
-        // SETTINGS
-        else if (id == R.id.side_nav_setting) {
-        }
-
-        // CATEGORY (Bottom)
-        else if (id == R.id.bottom_nav_category) {
-        }
-
-        // LOGIN
-        else if (id == R.id.side_nav_login) {
-        }
-
-        // LOGOUT
-        else if (id == R.id.side_nav_logout) {
-        }
-
-        // Close drawer after click
-        drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 }
