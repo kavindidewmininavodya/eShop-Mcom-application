@@ -18,6 +18,12 @@
     <string name="search_hint">Search here</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_title">Login to Eshop</string>
+    <string name="forgot_password">Forgot Password?\n</string>
+    <string name="text_sign_in">Sign In</string>
+    <string name="text_create_account">or, create a new account?</string>
+    <string name="text_sign_up">Sign Up</string>
+    <string name="signup_title">Join EShop</string>
+    <string name="text_signin_account">Already have an Account ?</string>
+    <string name="text_password_message">Password must contain at least 6 characters</string>
 </resources>

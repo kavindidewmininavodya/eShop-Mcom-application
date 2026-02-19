@@ -51,4 +51,5 @@
     <style name="Theme.EShop.FullScreen" parent="Theme.EShop">
         <item name="android:windowFullscreen">true</item>
     </style>
+
 </resources>
