@@ -14,13 +14,13 @@
         android:orientation="vertical">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolBar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_menu">
+            app:navigationIcon="@drawable/menu_24">
 
             <EditText
-                android:id="@+id/text_input_text"
+                android:id="@+id/text_input_search"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="10dp"
@@ -62,8 +62,6 @@
         app:itemIconSize="25dp"
         app:itemIconTint="@color/nav_item_colors"
         app:menu="@menu/side_nav_menu" />
-
-
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
