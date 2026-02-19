@@ -1,37 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group>
+    <group
+        android:id="@+id/side_nav_group_main"
+        android:checkableBehavior="single">
         <item
+            android:id="@+id/side_nav_home"
+            android:checkable="true"
             android:icon="@drawable/home_24"
             android:title="@string/side_nav_home_title" />
         <item
+            android:id="@+id/side_nav_profile"
+            android:checkable="true"
             android:icon="@drawable/person_24"
-            android:title="@string/side_nav_profile_title" />
+            android:title="@string/side_nav_profile_title"
+            android:visible="true" />
         <item
+            android:id="@+id/side_nav_orders"
+            android:checkable="true"
             android:icon="@drawable/order_list_24"
-            android:title="@string/side_nav_orders_title" />
+            android:title="@string/side_nav_orders_title"
+            android:visible="true" />
         <item
-            android:checked="true"
+            android:id="@+id/side_nav_wishlist"
+            android:checkable="true"
             android:icon="@drawable/favorite_24"
-            android:title="@string/side_nav_wishlist_title" />
+            android:title="@string/side_nav_wishlist_title"
+            android:visible="true" />
         <item
+            android:id="@+id/side_nav_cart"
+            android:checkable="true"
             android:icon="@drawable/shopping_cart_24"
-            android:title="@string/side_nav_cart_title" />
+            android:title="@string/side_nav_cart_title"
+            android:visible="true" />
         <item
+            android:id="@+id/side_nav_message"
+            android:checkable="true"
             android:icon="@drawable/message_24"
-            android:title="@string/side_nav_message_title" />
+            android:title="@string/side_nav_message_title"
+            android:visible="false" />
         <item
+            android:id="@+id/side_nav_settings"
+            android:checkable="true"
             android:icon="@drawable/settings_24"
-            android:title="@string/side_nav_settings_title" />
+            android:title="@string/side_nav_settings_title"
+            android:visible="false" />
     </group>
 
-    <group>
+    <group android:id="@+id/side_nav_group_auth">
         <item
+            android:id="@+id/side_nav_login"
             android:icon="@drawable/login_24"
             android:title="@string/side_nav_login_title" />
         <item
+            android:id="@+id/side_nav_logout"
             android:icon="@drawable/logout_24"
-            android:title="@string/side_nav_logout_title" />
+            android:title="@string/side_nav_logout_title"
+            android:visible="false" />
     </group>
 
 </menu>
