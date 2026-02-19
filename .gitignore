@@ -30,3 +30,4 @@ local.properties
 /gradle/wrapper/gradle-wrapper.jar
 /gradle/wrapper/gradle-wrapper.properties
 /gradlew
+/app/google-services.json
