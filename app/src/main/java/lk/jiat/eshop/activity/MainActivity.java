@@ -15,9 +15,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import lk.jiat.eshop.R;
 import lk.jiat.eshop.databinding.ActivityMainBinding;
 import lk.jiat.eshop.databinding.SideNavHeaderBinding;
@@ -29,6 +34,7 @@ import lk.jiat.eshop.fragment.OrdersFragment;
 import lk.jiat.eshop.fragment.ProfileFragment;
 import lk.jiat.eshop.fragment.SettingsFragment;
 import lk.jiat.eshop.fragment.WishlistFragment;
+import lk.jiat.eshop.model.User;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnItemSelectedListener {
@@ -41,6 +47,9 @@ public class MainActivity extends AppCompatActivity
     private MaterialToolbar toolbar;
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +96,32 @@ public class MainActivity extends AppCompatActivity
             navigationView.getMenu().findItem(R.id.side_nav_home).setChecked(true);
             bottomNavigationView.getMenu().findItem(R.id.bottom_nav_home).setChecked(true);
         }
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
+        if(currentUser != null){
+            firebaseFirestore.collection("users").document(currentUser.getUid()).get()
+                    .addOnSuccessListener(ds -> {
+                        User user = ds.toObject(User.class);
+
+                        if (user != null) {
+                            sideNavHeaderBinding.headerUserName.setText(user.getName());
+                            sideNavHeaderBinding.headerUserEmail.setText(user.getEmail());
+
+                            Glide.with(MainActivity.this)
+                                    .load(user.getProfilePicUrl())
+                                    .circleCrop()
+                                    .into(sideNavHeaderBinding.headerProfilePic);
+                        }
+                    });
+
+        }
+
+
+
 
     }
 
